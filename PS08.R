@@ -309,12 +309,6 @@ runtime_dataframe <- expand.grid(n_values, k_values) %>%
 runtime_dataframe
 
 
-
-
-# Time knn here -----------------------------------------------------------
-
-
-
 # Plot your results ---------------------------------------------------------
 # Think of creative ways to improve this barebones plot. Note: you don't have to
 # necessarily use geom_point
@@ -336,3 +330,12 @@ ggsave(filename="brenna_sullivan.png", width=16, height = 9)
 # -d: number of predictors used? In this case d is fixed at 3
 
 
+# According to the graph, the run time, with d held constant at 3, 
+# increases both as n, the number of points in the training set, and k, 
+# the number of neighbors to consider, increase.  Thus, the highest values 
+# for runtime are in the upper right of the graph.  However, k and n do not have the same
+# amount of influence over runtime, as the highest values of k all have relatively high
+# values for runtime, while the values of n do not appear to have as large of an effect 
+# on the runtime for the knn model.  Therefore, the Big-O runtime algorithmic 
+# complexity as a function could roughly be K, since k is the fastest increasing 
+# component in the model.
