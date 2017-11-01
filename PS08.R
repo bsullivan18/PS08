@@ -21,7 +21,7 @@ runtime
 # Get data ----------------------------------------------------------------
 # Accelerometer Biometric Competition Kaggle competition data
 # https://www.kaggle.com/c/accelerometer-biometric-competition/data
-train <- read_csv("train25.csv")
+train <- read_csv("C:/Users/Brenna/Documents/PS08/train25.csv")
 
 # YOOGE!
 dim(train)
@@ -33,7 +33,7 @@ model_formula <- as.formula(Device ~ X + Y + Z)
 
 # Values to use:
 n_values <- c(10000, 500000, 1000000, 2500000, 4000000, 5000000)
-k_values <- c(100, 1000, 100000, 250000, 500000, 750000, 1000000)
+k_values <- c(1, 100, 1000, 2500, 5000, 7500, 9999)
 
 tic()
 model_knn11 <- caret::knn3(model_formula, data=slice(train, 1:n_values[1]), k = k_values[1])
@@ -309,11 +309,17 @@ runtime_dataframe <- expand.grid(n_values, k_values) %>%
 runtime_dataframe
 
 
+
+
+# Time knn here -----------------------------------------------------------
+
+
+
 # Plot your results ---------------------------------------------------------
 # Think of creative ways to improve this barebones plot. Note: you don't have to
 # necessarily use geom_point
 
-runtime_plot <- ggplot(runtime_dataframe, aes(x=n, y=k, col=runtime)) +
+runtime_plot <- ggplot(runtime_dataframe, aes(x=n, y=runtime, col=k)) +
   geom_point()
 
 runtime_plot
@@ -329,13 +335,10 @@ ggsave(filename="brenna_sullivan.png", width=16, height = 9)
 # -k: number of neighbors to consider
 # -d: number of predictors used? In this case d is fixed at 3
 
-
-# According to the graph, the run time, with d held constant at 3, 
+# According to the graph, the runtime of the knn model, with d held constant at 3, 
 # increases both as n, the number of points in the training set, and k, 
 # the number of neighbors to consider, increase.  Thus, the highest values 
-# for runtime are in the upper right of the graph.  However, k and n do not have the same
-# amount of influence over runtime, as the highest values of k all have relatively high
-# values for runtime, while the values of n do not appear to have as large of an effect 
-# on the runtime for the knn model.  Therefore, the Big-O runtime algorithmic 
-# complexity as a function could roughly be K, since k is the fastest increasing 
-# component in the model.
+# for runtime are in the upper right of the graph.  The, the Big-O runtime algorithmic 
+# complexity as a function could roughly be n^2, since n is the fastest increasing 
+# component in the model and, according to the plot, runtime seems to be 
+# growing, at least somewhat, exponentially as n goes up for each value of k.
